@@ -3,13 +3,7 @@
 #include <cstdint>
 #include <string>
 #include <vector>
-
-enum WireType : uint8_t {
-  VARINT = 0,
-  FIXED64 = 1,
-  LENGTH_DELIMITED = 2,
-  FIXED32 = 5
-};
+#include "types.h"
 
 void write_tag(uint32_t field_number, WireType wire_type,
                std::vector<uint8_t> &buf);
