@@ -89,6 +89,13 @@ The benchmark suite processes **1,000,000 records** containing integers, floats,
 2. **True Zero-Copy**: SwiftProto uses `std::string_view` to point directly to the source buffer, whereas Protobuf copies strings into internal fields unless using advanced Arena allocators.
 3. **Inlined Varints**: Low-level bit manipulation functions are highly optimized and fully inlined by the compiler.
 
+### Trade-offs: SwiftProto vs. Google Protobuf
+While SwiftProto is faster in this benchmark, it makes specific trade-offs:
+*   **Memory Lifetime Management (Safety vs. Speed)**: SwiftProto uses `std::string_view` to point directly into the binary buffer for zero-copy deserialization. If the buffer is modified or goes out of scope, the deserialized struct contains dangling pointers. Google Protobuf copies values to owned `std::string` fields to ensure complete memory safety.
+*   **Multi-Language Ecosystems**: Google Protobuf compiles schemas to C++, Java, Go, Python, Rust, Swift, and more. SwiftProto is built exclusively for C++17.
+*   **Feature Completeness**: Google Protobuf supports maps, unions (`oneof`), and gRPC service definitions. SwiftProto is a minimal serializer optimized for performance.
+*   **Target Domain**: SwiftProto is ideal for ultra-low latency domains (like High-Frequency Trading or game engine networking) where lifetimes are strictly controlled, whereas Protobuf is used for standard microservice communications.
+
 ---
 
 ## 4. Usage & Project Structure
