@@ -19,7 +19,7 @@ void write_bool(uint32_t field_number, bool value, std::vector<uint8_t> &buf) {
   encode_varint(value ? 1 : 0, buf);
 }
 
-void write_string(uint32_t field_number, const std::string &value,
+void write_string(uint32_t field_number, std::string_view value,
                   std::vector<uint8_t> &buf) {
   write_tag(field_number, LENGTH_DELIMITED, buf);
   encode_varint(value.size(), buf);

@@ -2,6 +2,7 @@
 #include "varint.h"
 #include <cstdint>
 #include <string>
+#include <string_view>
 #include <vector>
 #include "types.h"
 
@@ -10,8 +11,11 @@ struct Tag {
   WireType wire_type;
 };
 
+void skip_field(const std::vector<uint8_t> &buf, size_t &pos, WireType wire_type);
+
 Tag read_tag(const std::vector<uint8_t> &buf, size_t &pos);
 int64_t read_int64(const std::vector<uint8_t> &buf, size_t &pos);
 std::string read_string(const std::vector<uint8_t> &buf, size_t &pos);
+std::string_view read_string_view(const std::vector<uint8_t> &buf, size_t &pos);
 float read_float(const std::vector<uint8_t> &buf, size_t &pos);
 bool read_bool(const std::vector<uint8_t> &buf, size_t &pos);
